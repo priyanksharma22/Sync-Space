@@ -53,3 +53,21 @@ To get a local copy up and running, follow these simple steps.
    ```bash
    git clone https://github.com/priyanksharma22/Sync-Space.git
    cd Sync-Space
+
+2. Clone the Repository
+ ```bash
+git clone https://github.com/priyanksharma22/Sync-Space.git
+cd Sync-Space
+
+# Install Backend Dependencies
+npm install
+
+# Create Environment File
+# Create a file named .env in the root directory and add the following:
+MONGO_URI=mongodb+srv://user:password@cluster.mongodb.net/SyncSpaceDB
+JWT_SECRET=a-very-strong-and-secret-key-that-no-one-can-guess
+PORT=5000
+
+# Run the Server
+npm run dev
+
