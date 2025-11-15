@@ -129,4 +129,39 @@ Since there is no frontend, use Postman to test the API.
 
 **Body (JSON):**
 
+```json
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
 ```
+
+Copy the token from this response.
+
+---
+
+### **3. Get All Rooms (Protected Route)**
+
+**Method:** GET  
+**URL:** `http://localhost:5000/api/rooms`
+
+**Authorization → Bearer Token:**  
+Paste the JWT token you copied from login.
+
+---
+
+(Repeat this process to test all other booking-related endpoints.)
+
+---
+
+## ✔️ Notes
+
+- All protected routes require a valid JWT token  
+- Admin-only routes require the `role: "admin"` role  
+- Uses middleware for authentication and role-based authorization  
+
+---
+
+## 📌 License
+
+This project is for learning purposes and open for improvements.
