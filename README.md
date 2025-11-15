@@ -1,126 +1,132 @@
-SyncSpace - Room Booking API
+# SyncSpace - Room Booking API
 
-SyncSpace is a backend REST API for a multi-user room booking application, built with Node.js, Express, and MongoDB. It provides a complete, secure API for users to browse and book rooms, and for administrators to manage all system data.
+SyncSpace is a backend REST API for a multi-user room booking application, built with **Node.js**, **Express**, and **MongoDB**.  
+It provides secure APIs for users to browse and book rooms, and for administrators to manage all system data.
 
-This project is a backend-only service. All endpoints are designed to be tested and consumed using an API client like Postman.
+This project is **backend-only**. All endpoints can be tested using an API client like **Postman**.
 
-✨ Features
+---
 
-🧑‍💼 User Features (via API)
+## ✨ Features
 
-Secure Authentication: Create an account and log in via a secure, JWT (JSON Web Token) based system.
+### 🧑‍💼 User Features (via API)
 
-View Rooms: Fetch a list of all available rooms, including their capacity and description.
+- **Secure Authentication** → Register & log in using JWT-based authentication  
+- **View Rooms** → Fetch all available rooms with capacity & description  
+- **Book a Room** → Request a booking for any room with date & time  
+- **My Bookings** → View all your own bookings (Pending / Approved / Rejected)
 
-Book a Room: Submit a request to book a room for a specific date and time.
+---
 
-View "My Bookings": Retrieve a list of all personal bookings with their current status (Pending, Approved, or Rejected).
+### 🛠️ Admin Features (via API)
 
-🛠️ Admin Features (via API)
+Admins get everything users get, plus:
 
-Includes all user features, plus:
+- **Manage All Bookings** → View all bookings from all users  
+- **Approve/Reject Bookings** → Update booking status  
+- **Add Rooms** → Add new rooms into the system  
 
-Manage All Bookings: Fetch a complete list of all bookings from all users.
+---
 
-Approve/Reject Bookings: Update the status of any booking (e.g., from "pending" to "approved").
+## 🧩 Tech Stack
 
-Add New Rooms: Create and add new rooms to the system.
+- **Backend:** Node.js, Express.js  
+- **Database:** MongoDB + Mongoose  
+- **Security:** JWT Authentication, bcrypt password hashing  
+- **API Testing:** Postman  
 
-🧩 Tech Stack
+---
 
-Backend: Node.js, Express.js
+## 🚀 Getting Started
 
-Database: MongoDB with Mongoose (for data modeling and schema validation)
+Follow these steps to set up the project locally.
 
-Security: JSON Web Tokens (JWT) for authentication, bcrypt for password hashing
+---
 
-API Testing: Postman
+### ✅ Prerequisites
 
-🚀 Getting Started
+Make sure you have:
 
-To get a local copy up and running, follow these simple steps.
+- Node.js (v14 or higher)  
+- npm  
+- MongoDB (local or Atlas)  
+- Postman  
 
-✅ Prerequisites
+---
 
-Node.js (v14 or higher)
+## ⚙️ Installation & Running
 
-npm (Node Package Manager)
+### 1. Clone the Repository
 
-MongoDB (either a local instance or a MongoDB Atlas cloud database)
-
-Postman (or any other API client)
-
-⚙️ Installation & Running
-
-Clone the Repository:
-
-git clone [https://github.com/priyanksharma22/Sync-Space.git](https://github.com/priyanksharma22/Sync-Space.git)
+```bash
+git clone https://github.com/priyanksharma22/Sync-Space.git
 cd Sync-Space
+```
 
+### 2. Install Backend Dependencies
 
-Install Backend Dependencies:
-
+```bash
 npm install
+```
 
+### 3. Create Environment File
 
-Create Environment File:
-Create a file named .env in the root directory and add your secret variables:
+Create a `.env` file in the project root:
 
-# Your MongoDB connection string
+```env
+# MongoDB connection string
 MONGO_URI=mongodb+srv://user:password@cluster.mongodb.net/SyncSpaceDB
 
-# Your secret key for creating JSON Web Tokens
+# JWT secret key
 JWT_SECRET=a-very-strong-and-secret-key-that-no-one-can-guess
 
-# The port your server will run on
+# Server port
 PORT=5000
+```
 
+### 4. Run the Server
 
-Run the Server:
-
+```bash
 npm run dev
+```
 
+Your backend will start on:
 
-Your backend server will now be running on http://localhost:5000.
+```
+http://localhost:5000
+```
 
-🧪 API Testing (Postman)
+---
 
-The server is running, but there is no frontend. You must use a tool like Postman to interact with the API.
+## 🧪 API Testing (Postman)
 
-1. Register a User
+Since there is no frontend, use Postman to test the API.
 
-Method: POST
+---
 
-URL: http://localhost:5000/api/auth/register
+### **1. Register a User**
 
-Body (raw, JSON):
+**Method:** POST  
+**URL:** `http://localhost:5000/api/auth/register`  
 
-{ "name": "Test User", "email": "test@example.com", "password": "password123", "role": "user" }
+**Body (JSON):**
 
+```json
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "password123",
+  "role": "user"
+}
+```
 
-2. Log In
+---
 
-Method: POST
+### **2. Log In**
 
-URL: http://localhost:5000/api/auth/login
+**Method:** POST  
+**URL:** `http://localhost:5000/api/auth/login`
 
-Body (raw, JSON):
+**Body (JSON):**
 
-{ "email": "test@example.com", "password": "password123" }
-
-
-Action: Copy the token from the response for the next steps.
-
-3. Get All Rooms (Protected Route)
-
-Method: GET
-
-URL: http://localhost:5000/api/rooms
-
-Authorization Tab:
-
-Type: Bearer Token
-
-Token: Paste the token you copied from logging in.
-
-(You can follow this same pattern to test all other API endpoints for creating and managing bookings.)
+```
