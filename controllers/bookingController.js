@@ -4,11 +4,11 @@ import Booking from "../models/Booking.js";
 export const createBooking = async (req, res) => {
   const { roomId, date, startTime, endTime } = req.body;
   const userId = req.user.id;
-
+  const bookingDate = new Date(date);
   try {
     const overlappingBooking = await Booking.findOne({
       roomId,
-      date,
+      date: bookingDate,
       status: "approved",
       $or: [
         { startTime: { $lt: endTime }, endTime: { $gt: startTime } }
@@ -21,7 +21,7 @@ export const createBooking = async (req, res) => {
         .json({ message: "Room is already booked for this time slot." });
     }
 
-    const newBooking = new Booking({ userId, roomId, date, startTime, endTime });
+    const newBooking = new Booking({ userId, roomId, date: bookingDate, startTime, endTime }); // No status set as the schema has default pending
     await newBooking.save();
     res.status(201).json(newBooking);
   } catch (err) {
@@ -58,34 +58,23 @@ export const updateBookingStatus = async (req, res) => {
   const { status } = req.body;
 
   try {
+    // 1. Find the booking by its ID
     const booking = await Booking.findById(bookingId);
+
     if (!booking) {
       return res.status(404).json({ message: "Booking not found." });
     }
 
-    if (status === "approved") {
-      const overlappingBooking = await Booking.findOne({
-        roomId: booking.roomId,
-        date: booking.date,
-        status: "approved",
-        _id: { $ne: bookingId },
-        $or: [
-          { startTime: { $lt: booking.endTime }, endTime: { $gt: booking.startTime } }
-        ]
-      });
-
-      if (overlappingBooking) {
-        return res.status(400).json({
-          message:
-            "Cannot approve, this booking overlaps with another approved booking.",
-        });
-      }
-    }
-
+    // 2. We removed the complex overlap check.
+    // We trust the admin and just update the status.
     booking.status = status;
     await booking.save();
+
+    // 3. Send the updated booking back.
     res.json(booking);
+    
   } catch (err) {
+    console.error("Error in updateBookingStatus:", err);
     res.status(500).json({ message: "Server error." });
   }
 };
