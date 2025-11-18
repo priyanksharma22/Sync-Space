@@ -6,7 +6,6 @@ const roomSchema = new mongoose.Schema(
     capacity: { type: Number, required: true },
     description: { type: String, default: "" },
   },
-  { timestamps: true }
 );
 
 export default mongoose.model("Room", roomSchema);
