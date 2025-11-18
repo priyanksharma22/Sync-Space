@@ -13,9 +13,10 @@ const authMiddleware = (req, res, next) => {
     // 3. Get just the token string (remove "Bearer ")
     const token = authHeader.split(" ")[1];
 
+    // Checks token format, Verify signature, Check expiry, decode the payload
     const decodedPayload = jwt.verify(token, process.env.JWT_SECRET); // If the signature is false or token is expired then the server will throw an error that's why this part is inside the try catch block
 
-    // The JWT token made while registering contains only the user userRole and userId so after verifying the variable
+    // The JWT token made while registering contains only the userId so after verifying the variable
     // decodedPayload holds the object and when we do req.user it gets the userId out of it 
     req.user = decodedPayload;
 
